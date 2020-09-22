@@ -49,17 +49,17 @@ if __name__ == "__main__":
                         help="the entity (team) of wandb's project")
 
     # Algorithm specific arguments
-    parser.add_argument('--n-minibatch', type=int, default=2,
+    parser.add_argument('--n-minibatch', type=int, default=4,
                         help='the number of mini batch')
     parser.add_argument('--num-envs', type=int, default=1,
                         help='the number of parallel game environment')
-    parser.add_argument('--num-steps', type=int, default=128,
+    parser.add_argument('--num-steps', type=int, default=1028,
                         help='the number of steps per game environment')
     parser.add_argument('--gamma', type=float, default=0.99,
                         help='the discount factor gamma')
     parser.add_argument('--gae-lambda', type=float, default=0.95,
                         help='the lambda for the general advantage estimation')
-    parser.add_argument('--ent-coef', type=float, default=0.00,
+    parser.add_argument('--ent-coef', type=float, default=0.01,
                         help="coefficient of the entropy")
     parser.add_argument('--vf-coef', type=float, default=0.5,
                         help="coefficient of the value function")
@@ -67,9 +67,9 @@ if __name__ == "__main__":
                         help='the maximum norm for the gradient clipping')
     parser.add_argument('--clip-coef', type=float, default=0.1,
                         help="the surrogate clipping coefficient")
-    parser.add_argument('--update-epochs', type=int, default=1,
+    parser.add_argument('--update-epochs', type=int, default=4,
                          help="the K epochs to update the policy")
-    parser.add_argument('--kle-stop', type=lambda x:bool(strtobool(x)), default=False, nargs='?', const=True,
+    parser.add_argument('--kle-stop', type=lambda x:bool(strtobool(x)), default=True, nargs='?', const=True,
                          help='If toggled, the policy updates will be early stopped w.r.t target-kl')
     parser.add_argument('--kle-rollback', type=lambda x:bool(strtobool(x)), default=False, nargs='?', const=True,
                          help='If toggled, the policy updates will roll back to previous policy if KL exceeds target-kl')
@@ -88,9 +88,9 @@ if __name__ == "__main__":
     if not args.seed:
         args.seed = int(time.time())
 
-# PySC2 logic:
-FLAGS = flags.FLAGS
-FLAGS(sys.argv)
+    # PySC2 logic:
+    FLAGS = flags.FLAGS
+    FLAGS(['ppo_sc2.py'])
 args.batch_size = int(args.num_envs * args.num_steps)
 args.minibatch_size = int(args.batch_size // args.n_minibatch)
 
@@ -195,21 +195,23 @@ class Agent(nn.Module):
             nn.ReLU(),
             layer_init(nn.Conv2d(16, 32, kernel_size=2)),
             nn.ReLU(),
-            nn.Flatten(),) # 32*6*6
+            nn.Flatten(),
+            layer_init(nn.Linear(32*6*6, 128))) # 32*6*6
         self.minimap_network = nn.Sequential(
             Scale(1/255),
             layer_init(nn.Conv2d(4, 16, kernel_size=3, stride=2)),
             nn.ReLU(),
             layer_init(nn.Conv2d(16, 32, kernel_size=2)),
             nn.ReLU(),
-            nn.Flatten(),) # 32*6*6
+            nn.Flatten(),
+            layer_init(nn.Linear(32*6*6, 128))) # 32*6*6
         self.non_spatial_network = nn.Sequential(
             layer_init(nn.Linear(34, 128)),
             nn.Tanh(),
             nn.Flatten(),) # 128
         
-        self.actor = layer_init(nn.Linear(32*6*6*2+128, envs.action_space.nvec.sum()), std=0.01)
-        self.critic = layer_init(nn.Linear(32*6*6*2+128, 1), std=1)
+        self.actor = layer_init(nn.Linear(128*3, envs.action_space.nvec.sum()), std=0.01)
+        self.critic = layer_init(nn.Linear(128*3, 1), std=1)
 
     def preprocess_pysc2(self, x):
         split_obs = [torch.split(item, feature_flatten_shapes) for item in x]

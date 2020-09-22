@@ -175,6 +175,8 @@ class PySC2Env(gym.Env):
 
     def render(self, mode="human"):
         if mode == "rgb_array":
-            return np.transpose(
-              pygame.surfarray.pixels3d(
-                  self._env._renderer_human._window), axes=(1, 0, 2))
+            x = self._env._renderer_human._window.copy()
+            array = pygame.surfarray.pixels3d(x)
+            array = np.transpose(array, axes=(1, 0, 2))
+            del x
+            return array
