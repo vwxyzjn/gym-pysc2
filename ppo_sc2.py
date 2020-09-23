@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # Common arguments
     parser.add_argument('--exp-name', type=str, default=os.path.basename(__file__).rstrip(".py"),
                         help='the name of this experiment')
-    parser.add_argument('--gym-id', type=str, default="MoveToBeacon-v0",
+    parser.add_argument('--gym-id', type=str, default="SC2MoveToBeacon-v0",
                         help='the id of the gym environment')
     parser.add_argument('--learning-rate', type=float, default=2.5e-4,
                         help='the learning rate of the optimizer')
@@ -142,12 +142,13 @@ def make_env(gym_id, seed, idx):
         env.observation_space.seed(seed)
         return env
     return thunk
-envs = VecPyTorch(DummyVecEnv([make_env(args.gym_id, args.seed+i, i) for i in range(args.num_envs)]), device)
-# if args.prod_mode:
-#     envs = VecPyTorch(
-#         SubprocVecEnv([make_env(args.gym_id, args.seed+i, i) for i in range(args.num_envs)], "fork"),
-#         device
-#     )
+if args.prod_mode:
+    envs = VecPyTorch(
+        SubprocVecEnv([make_env(args.gym_id, args.seed+i, i) for i in range(args.num_envs)], "fork"),
+        device
+    )
+else:    
+    envs = VecPyTorch(DummyVecEnv([make_env(args.gym_id, args.seed+i, i) for i in range(args.num_envs)]), device)
 
 # PySC2 logic:
 feature_flatten_shapes = envs.get_attr("feature_flatten_shapes")[0]

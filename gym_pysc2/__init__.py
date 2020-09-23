@@ -6,7 +6,7 @@ ACTIONS_MINIGAMES_ALL = ACTIONS_MINIGAMES + [11, 71, 72, 73, 74, 79, 140, 168, 2
 ACTIONS_ALL = [f.id for f in actions.FUNCTIONS]
 
 register(
-    id='MoveToBeacon-v0',
+    id='SC2MoveToBeacon-v0',
     entry_point='gym_pysc2.envs:PySC2Env',
     kwargs={
         'map_name': "MoveToBeacon",
