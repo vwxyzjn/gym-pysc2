@@ -13,3 +13,57 @@ register(
         "action_ids": ACTIONS_MINIGAMES
     }
 )
+
+register(
+    id='SC2CollectMineralShards-v0',
+    entry_point='gym_pysc2.envs:PySC2Env',
+    kwargs={
+        'map_name': "CollectMineralShards",
+        "action_ids": ACTIONS_MINIGAMES
+    }
+)
+
+register(
+    id='SC2FindAndDefeatZerglings-v0',
+    entry_point='gym_pysc2.envs:PySC2Env',
+    kwargs={
+        'map_name': "FindAndDefeatZerglings",
+        "action_ids": ACTIONS_MINIGAMES
+    }
+)
+
+register(
+    id='SC2DefeatRoaches-v0',
+    entry_point='gym_pysc2.envs:PySC2Env',
+    kwargs={
+        'map_name': "DefeatRoaches",
+        "action_ids": ACTIONS_MINIGAMES
+    }
+)
+
+register(
+    id='SC2DefeatZerglingsAndBanelings-v0',
+    entry_point='gym_pysc2.envs:PySC2Env',
+    kwargs={
+        'map_name': "DefeatZerglingsAndBanelings",
+        "action_ids": ACTIONS_MINIGAMES
+    }
+)
+
+register(
+    id='SC2CollectMineralsAndGas-v0',
+    entry_point='gym_pysc2.envs:PySC2Env',
+    kwargs={
+        'map_name': "CollectMineralsAndGas",
+        "action_ids": ACTIONS_MINIGAMES
+    }
+)
+
+register(
+    id='SC2BuildMarines-v0',
+    entry_point='gym_pysc2.envs:PySC2Env',
+    kwargs={
+        'map_name': "BuildMarines",
+        "action_ids": ACTIONS_MINIGAMES
+    }
+)

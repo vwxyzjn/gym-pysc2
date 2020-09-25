@@ -17,13 +17,15 @@ class PySC2Env(gym.Env):
         action_ids=None,
         spatial_dim=16,
         step_mul=8,
-        map_name="MoveToBeacon") -> None:
+        map_name="MoveToBeacon",
+        visualize=True) -> None:
 
         super().__init__()
         self.action_ids = action_ids
         self.spatial_dim = spatial_dim
         self.step_mul = step_mul
         self.map_name = map_name
+        self.visualize = visualize
         
         # preprocess
         if not self.action_ids:
@@ -35,7 +37,7 @@ class PySC2Env(gym.Env):
         # setup env
         self._env = sc2_env.SC2Env(
             map_name=self.map_name,
-            visualize=True,
+            visualize=self.visualize,
             agent_interface_format=[sc2_env.parse_agent_interface_format(
                 feature_screen=self.spatial_dim,
                 feature_minimap=self.spatial_dim,
