@@ -19,9 +19,10 @@ https://wandb.ai/cleanrl/cleanrl.benchmark/reports/Gym-pysc2-Benchmark--Vmlldzoy
 wget -O ~/sc2.zip http://blzdistsc2-a.akamaihd.net/Linux/SC2.4.10.zip && \
 unzip ~/sc2.zip -d ~/ && \
 rm ~/sc2.zip
-# hack: fix the error message
-# ffmpeg: ~/StarCraftII/Libs/libstdc++.so.6: version `GLIBCXX_3.4.26'
-# but make sure you have ffmpeg installed
+
+## hack: fix the error message
+## ffmpeg: ~/StarCraftII/Libs/libstdc++.so.6: version `GLIBCXX_3.4.26'
+## but make sure you have ffmpeg installed
 mv ~/StarCraftII/Libs/libstdc++.so.6 ~/StarCraftII/Libs/libstdc++.so.6.temp
 
 # Second step: install pysc2 
