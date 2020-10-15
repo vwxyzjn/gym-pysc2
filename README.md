@@ -2,6 +2,13 @@
 
 Gym wrapper for pysc2. This repo contains an implementation that honors the gym's API and supports the rendering function. So it is possible to use the `gym.wrappers.Monitor` class to create videos of agents playing the game.
 
+![](demo.gif)
+
+
+This is still a work in progress but you can see some
+example runs here
+
+https://wandb.ai/cleanrl/cleanrl.benchmark/reports/Gym-pysc2-Benchmark--VmlldzoyNTEyMTc
 
 
 ## Installation
@@ -46,10 +53,3 @@ tensorboard --logdir runs
 You could also check the videos of agents playing the game
 in the `videos` folder
 
-
-# Benchmark results
-
-This is still a work in progress but you can see some
-example runs here
-
-https://wandb.ai/cleanrl/cleanrl.benchmark/reports/Gym-pysc2-Benchmark--VmlldzoyNTEyMTc
