@@ -1,6 +1,8 @@
 # gym-pysc2
 
-Gym wrapper for pysc2
+Gym wrapper for pysc2. This repo contains an implementation that honors the gym's API and supports the rendering function. So it is possible to use the `gym.wrappers.Monitor` class to create videos of agents playing the game.
+
+
 
 ## Installation
 
