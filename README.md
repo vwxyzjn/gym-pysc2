@@ -40,8 +40,7 @@ python ppo_sc2.py \
     --gym-id SC2MoveToBeacon-v0 \
     --num-envs 1 \
     --num-steps 256 \
-    --wandb-project-name cleanrl.benchmark \
-    --wandb-entity cleanrl --cuda True \
+    --cuda True \
     --capture-video
 ```
 
@@ -54,3 +53,21 @@ tensorboard --logdir runs
 You could also check the videos of agents playing the game
 in the `videos` folder
 
+## Run with wandb integration
+
+```
+# login wandb by using `wandb login`
+for seed in {1..1}
+do
+    (sleep 0.3 && nohup xvfb-run -a python ppo_sc2.py \
+    --total-timesteps 100000000 \
+    --gym-id SC2MoveToBeacon-v0 \
+    --num-envs 8 \
+    --num-steps 256 \
+    --wandb-project-name gym_pysc2 \
+    --prod-mode \
+    --cuda True \
+    --capture-video \
+    --seed $seed) >& /dev/null &
+done
+```
