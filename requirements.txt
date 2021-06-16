@@ -46,6 +46,7 @@ tensorboard==2.5.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 torch==1.8.1
+typing-extensions==3.10.0.0
 urllib3==1.26.5
 websocket-client==1.1.0
 Werkzeug==2.0.1
