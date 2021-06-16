@@ -1,0 +1,2 @@
+include versioneer.py
+include gym_pysc2/_version.py
