@@ -28,7 +28,15 @@ mv ~/StarCraftII/Libs/libstdc++.so.6 ~/StarCraftII/Libs/libstdc++.so.6.temp
 # Second step: install pysc2 
 git clone https://github.com/vwxyzjn/gym-pysc2
 cd gym-pysc2
-pip install -e .
+<!-- pip install gym_pysc2 --upgrade -->
+
+# Optional: construct virtualenv via `pyenv`
+pyenv install -s $(sed "s/\/envs.*//" .python-version)
+pyenv virtualenv $(sed "s/\/envs\// /" .python-version)
+pip install --upgrade pip wheel
+
+# install dependencies for running the training script
+pip install -r requirements.txt
 ```
 
 ## Get started
